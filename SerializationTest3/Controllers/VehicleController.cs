@@ -27,9 +27,9 @@ namespace SerializationTest3.Controllers
             public int Speed { get; set; }
         }
 
-        public class Catalog
+        public class CarWrapper
         {
-            public List<ICar> Cars { get; set; } = new List<ICar>();
+            public ICar Car { get; set; }
         }
 
         /* Returns
@@ -38,28 +38,27 @@ namespace SerializationTest3.Controllers
             "speed": 0
         }
          */
-        [HttpGet(nameof(GetSingleCar))]
-        public ICar GetSingleCar()
+        [HttpGet(nameof(GetCar))]
+        public ICar GetCar()
         {
             return new Car();
         }
 
         /* Returns (notice that "speed" is missing)
         {
-	        "cars": 
-	        [
-		        {
-			        "numberOfWheels": 0
-		        }
-	        ]
+	        "car": 
+            {
+		        "numberOfWheels": 0
+	        }
         }
          */
-        [HttpGet(nameof(GetAllCars))]
-        public Catalog GetAllCars()
+        [HttpGet(nameof(GetCarWrapper))]
+        public CarWrapper GetCarWrapper()
         {
-            var ret = new Catalog();
-            ret.Cars.Add(new Car());
-            return ret;
+            return new CarWrapper
+            {
+                Car = new Car()
+            };
         }
     }
 }
